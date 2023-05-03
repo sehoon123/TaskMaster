@@ -2,6 +2,7 @@
 <module external.linked.project.id=":app:main" external.linked.project.path="$MODULE_DIR$/../../../app" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -13,6 +14,8 @@
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
 =======
 >>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
     <facet type="kotlin-language" name="Kotlin">
@@ -121,7 +124,10 @@
       </configuration>
     </facet>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -133,6 +139,9 @@
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
+<<<<<<< HEAD
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+=======
 >>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
