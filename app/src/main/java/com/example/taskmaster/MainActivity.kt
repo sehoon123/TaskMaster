@@ -3,8 +3,7 @@ package com.example.taskmaster
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Check if the user is signed in
-        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
-        if (account == null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
             // If the user is not signed in, start LoginActivity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
