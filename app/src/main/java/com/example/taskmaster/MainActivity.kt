@@ -82,14 +82,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun readTodosFromDatabase() {
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                todoList.clear()
-                dataSnapshot.children.forEach { dataSnapshot ->
-                    val todo = dataSnapshot.getValue(String::class.java)
-                    todo?.let { todoList.add(it) }
+                val newTodoList = mutableListOf<String>()
+
+                for (childSnapshot in dataSnapshot.children) {
+                    val todoData = childSnapshot.getValue()
+                    if (todoData is String) {
+                        newTodoList.add(todoData)
+                    } else {
+                        Log.w("MainActivity", "Invalid todo data format: $todoData")
+                    }
                 }
+
+                todoList.clear()
+                todoList.addAll(newTodoList)
                 todoAdapter.notifyDataSetChanged()
             }
 
@@ -98,4 +107,5 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 }
