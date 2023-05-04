@@ -1,6 +1,7 @@
 package com.example.taskmaster
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -36,10 +37,14 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
         private const val CAMERA_PERMISSION_REQUEST_CODE = 100
     }
 
+    private var newTodo: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        newTodo = intent.getStringExtra("newTodo") ?: ""
 
         surfaceHolder = binding.surfaceView.holder
         surfaceHolder.addCallback(this)
@@ -121,7 +126,8 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
             .setTitle("Photo Options")
             .setMessage("What would you like to do with the photo?")
             .setPositiveButton("Proceed") { _, _ ->
-                savePhotoToTodoList()
+//                savePhotoToTodoList()
+                returnCapturedImage()
             }
             .setNegativeButton("Retake") { _, _ ->
                 capturedImage = null
@@ -132,6 +138,19 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
         dialog.show()
     }
 
+
+    private fun returnCapturedImage() {
+        capturedImage?.let { image ->
+            val imageByteArray: ByteArray = convertImageToByteArray(image)
+
+            val resultIntent = Intent().apply {
+                putExtra("newTodo", newTodo)
+                putExtra("imageByteArray", imageByteArray)
+            }
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
+    }
 
     private fun savePhotoToTodoList() {
         capturedImage?.let { image ->

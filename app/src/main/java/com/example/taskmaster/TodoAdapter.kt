@@ -1,13 +1,16 @@
 package com.example.taskmaster
 
-import com.example.taskmaster.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import com.example.taskmaster.R
 
-class TodoAdapter(private val todos: List<String>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(private val todos: List<Pair<String, ByteArray?>>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_todo, parent, false)
@@ -24,9 +27,16 @@ class TodoAdapter(private val todos: List<String>) : RecyclerView.Adapter<TodoAd
 
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val todoText: TextView = itemView.findViewById(R.id.txtTodo)
+        private val todoImage: ImageView = itemView.findViewById(R.id.imgTodo)
 
-        fun bind(todo: String) {
-            todoText.text = todo
+        fun bind(todo: Pair<String, ByteArray?>) {
+            todoText.text = todo.first
+            todo.second?.let {
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                todoImage.setImageBitmap(bitmap)
+            } ?: run {
+                todoImage.setImageResource(0) // or a placeholder image
+            }
         }
     }
 }
