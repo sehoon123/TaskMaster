@@ -21,6 +21,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeDatabaseReference()
+
+        setupRecyclerView()
+
+        setupAddButton()
+
+        setupCameraButton()
+
+        readTodosFromDatabase()
+    }
+
+    private fun initializeDatabaseReference() {
         // Check if the user is signed in
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
@@ -34,25 +46,35 @@ class MainActivity : AppCompatActivity() {
             database = FirebaseDatabase.getInstance()
             myRef = database.getReference("todos").child(userId)
         }
+    }
 
-        // Set up the RecyclerView and its adapter
+    private fun setupRecyclerView() {
         todoAdapter = TodoAdapter(todoList)
         binding.rvTodos.adapter = todoAdapter
         binding.rvTodos.layoutManager = LinearLayoutManager(this)
+    }
 
-        // Listen for add button clicks
+    private fun setupAddButton() {
         binding.btnAdd.setOnClickListener {
             val newTodo = binding.etTodo.text.toString().trim()
             if (newTodo.isNotEmpty()) {
-                addNewTodo(newTodo)
+                addNewTodoToDatabase(newTodo)
             }
         }
-
-        // Read data from the Realtime Database
-        readTodosFromDatabase()
     }
 
-    private fun addNewTodo(newTodo: String) {
+    private fun setupCameraButton() {
+        binding.btnCamera.setOnClickListener {
+            launchCameraActivity()
+        }
+    }
+
+    private fun launchCameraActivity() {
+        val intent = Intent(this, CameraActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun addNewTodoToDatabase(newTodo: String) {
         val key = myRef.push().key
         key?.let {
             myRef.child(it).setValue(newTodo)
