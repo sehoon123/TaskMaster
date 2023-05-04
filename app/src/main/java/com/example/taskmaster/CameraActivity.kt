@@ -12,18 +12,25 @@ import android.view.SurfaceView
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.taskmaster.databinding.ActivityCameraBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.io.IOException
-
 
 class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
-    private lateinit var surfaceView: SurfaceView
-    private lateinit var captureButton: Button
+    private lateinit var binding: ActivityCameraBinding
     private lateinit var surfaceHolder: SurfaceHolder
     private lateinit var camera: android.hardware.Camera
+    private lateinit var todoList: MutableList<String>
+    private lateinit var todoAdapter: TodoAdapter
+    private var capturedImage: Bitmap? = null
 
     companion object {
         private const val CAMERA_PERMISSION_REQUEST_CODE = 100
@@ -31,15 +38,13 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        surfaceView = findViewById(R.id.surfaceView)
-        captureButton = findViewById(R.id.captureButton)
-
-        surfaceHolder = surfaceView.holder
+        surfaceHolder = binding.surfaceView.holder
         surfaceHolder.addCallback(this)
 
-        captureButton.setOnClickListener {
+        binding.captureButton.setOnClickListener {
             takePhoto()
         }
     }
@@ -68,7 +73,11 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -98,13 +107,53 @@ class CameraActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     private fun takePhoto() {
         camera.takePicture(null, null, { data, _ ->
-            val capturedImage = data?.let {
+            capturedImage = data?.let {
                 val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                 rotateBitmap(bitmap)
             }
-            // Do something with the captured image (e.g., save it, display it, etc.)
+            showPhotoOptions()
             camera.startPreview()
         })
+    }
+
+    private fun showPhotoOptions() {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Photo Options")
+            .setMessage("What would you like to do with the photo?")
+            .setPositiveButton("Proceed") { _, _ ->
+                savePhotoToTodoList()
+            }
+            .setNegativeButton("Retake") { _, _ ->
+                capturedImage = null
+            }
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+    }
+
+
+    private fun savePhotoToTodoList() {
+        capturedImage?.let { image ->
+            val newTodo = "Photo Task" // Example: Create a new task for the photo
+            val imageByteArray: ByteArray = convertImageToByteArray(image)
+
+            // Add the new task with the photo to the todo list
+            todoList.add(newTodo)
+            todoAdapter.notifyDataSetChanged()
+
+            // Save the image byte array along with the task or perform any necessary actions
+            // Example: todoList.savePhotoWithTask(newTodo, imageByteArray)
+
+            // Clear the captured image after saving
+            capturedImage = null
+        }
+    }
+
+    private fun convertImageToByteArray(image: Bitmap): ByteArray {
+        val outputStream = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+        return outputStream.toByteArray()
     }
 
     private fun rotateBitmap(bitmap: Bitmap): Bitmap {
