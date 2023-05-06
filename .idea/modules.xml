@@ -2,19 +2,31 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.unitTest.iml" />
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
       <module fileurl="file://$PROJECT_DIR$/.idea/TaskMaster.iml" filepath="$PROJECT_DIR$/.idea/TaskMaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.unitTest.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.unitTest.iml" />
+=======
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
     </modules>
   </component>
 </project>
