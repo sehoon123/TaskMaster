@@ -183,7 +183,20 @@
     <content url="file://$MODULE_DIR$/../../../app/src/androidTestDebug" />
     <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml
     <orderEntry type="module" module-name="sehoon.AndroidStudioProjects.TaskMaster.app.main" scope="TEST" />
+========
+<<<<<<< HEAD
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml
+    <orderEntry type="module" module-name="sehoon.AndroidStudioProjects.TaskMaster.app.main" scope="TEST" />
+========
+    <orderEntry type="module" module-name="AndroidStudioProjects.TaskMaster.app.main" scope="TEST" />
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml
+>>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml
+=======
+    <orderEntry type="module" module-name="AndroidStudioProjects.TaskMaster.app.main" scope="TEST" />
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.13.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.annotation:annotation:1.5.0" level="project" />

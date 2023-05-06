@@ -2,14 +2,47 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudioProjects.TaskMaster.app.unitTest.iml" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
       <module fileurl="file://$PROJECT_DIR$/.idea/TaskMaster.iml" filepath="$PROJECT_DIR$/.idea/TaskMaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TaskMaster.app.unitTest.iml" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.unitTest.iml" />
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     </modules>
   </component>
 </project>

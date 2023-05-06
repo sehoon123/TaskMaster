@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":app:main" external.linked.project.path="$MODULE_DIR$/../../../app" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
+<<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -12,6 +35,31 @@
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
+<<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="5" platform="JVM 1.8" allPlatforms="JVM [1.8]" useProjectSettings="false">
         <compilerSettings>
@@ -25,7 +73,6 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
-                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/75cad997233879f2f75fba7ef333f3e9/transformed/viewbinding-8.0.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/81de5710729ebe9d0a0b08b1c6f93d48/transformed/firebase-auth-ktx-22.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5d1615bb887951bdb017d39bc4de5546/transformed/firebase-database-ktx-20.2.1-api.jar</arg>
@@ -148,6 +195,47 @@
         </compilerArguments>
       </configuration>
     </facet>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+<<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
+========
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
+<<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../app/src/main/res;file://$MODULE_DIR$/../../../app/src/debug/res;file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug;file://$MODULE_DIR$/../../../app/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
+<<<<<<< HEAD
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+=======
+>>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
+=======
+>>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../../app/build/intermediates/javac/debug/classes" />
@@ -155,6 +243,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../app/build/generated/ap_generated_sources/debug/out">
       <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
+<<<<<<< HEAD
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
+=======
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     </content>
     <content url="file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug">
       <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug" type="java-resource" />
@@ -164,6 +256,10 @@
     </content>
     <content url="file://$MODULE_DIR$/../../../app/build/generated/source/buildConfig/debug">
       <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+<<<<<<< HEAD
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+=======
+>>>>>>> a9120d71922bc9d41704e4de4bf44062b8874e44
     </content>
     <content url="file://$MODULE_DIR$/../../../app/src/debug" />
     <content url="file://$MODULE_DIR$/../../../app/src/main">
