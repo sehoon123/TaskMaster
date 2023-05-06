@@ -8,10 +8,14 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.appcompat.app.AlertDialog
 =======
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -21,11 +25,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.text.SimpleDateFormat
 import java.util.*
 =======
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -36,11 +44,16 @@ class MainActivity : AppCompatActivity() {
     private val todoList = mutableListOf<Todo>()
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
     private val todoList = mutableListOf<Todo>()
 =======
     private val todoList = mutableListOf<String>()
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+    private val todoList = mutableListOf<String>()
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +77,12 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
             val userId = user.uid
             val currentDate = getCurrentDateString()
             database = FirebaseDatabase.getInstance()
@@ -149,7 +165,10 @@ class MainActivity : AppCompatActivity() {
                 todoList.clear()
                 todoList.addAll(newTodoList)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 =======
             // User is signed in, initialize the database reference for the current user
             val userId = user.uid
@@ -191,7 +210,10 @@ class MainActivity : AppCompatActivity() {
                     todo?.let { todoList.add(it) }
                 }
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+<<<<<<< HEAD
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
                 todoAdapter.notifyDataSetChanged()
             }
 
@@ -201,9 +223,12 @@ class MainActivity : AppCompatActivity() {
         })
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 
     private fun updateTodoInDatabase(key: String?, updatedTodo: Todo) {
         key?.let {
@@ -222,7 +247,11 @@ class MainActivity : AppCompatActivity() {
 }
 =======
 }
+<<<<<<< HEAD
 =======
 }
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915

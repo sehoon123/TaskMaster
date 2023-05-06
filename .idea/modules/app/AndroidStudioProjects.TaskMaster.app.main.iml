@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":app:main" external.linked.project.path="$MODULE_DIR$/../../../app" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+<<<<<<< HEAD
 <<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
 ========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 <<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
 >>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -20,8 +26,11 @@
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
+<<<<<<< HEAD
 <<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
 ========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 <<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
 =======
 =======
@@ -29,7 +38,10 @@
 =======
 >>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
 >>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="5" platform="JVM 1.8" allPlatforms="JVM [1.8]" useProjectSettings="false">
         <compilerSettings>
@@ -165,8 +177,11 @@
         </compilerArguments>
       </configuration>
     </facet>
+<<<<<<< HEAD
 <<<<<<<< HEAD:.idea/modules/app/sehoon.AndroidStudioProjects.TaskMaster.app.main.iml
 ========
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 <<<<<<< HEAD:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
 =======
 <<<<<<< HEAD
@@ -190,7 +205,10 @@
 =======
 >>>>>>> 1709261fbb6ab0884a3e00d2ecf8dcab082c9689
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6:.idea/modules/app/TaskMaster.app.main.iml
+<<<<<<< HEAD
 >>>>>>>> d720d07f826272aa16771263cfb67b6ea7179549:.idea/modules/app/AndroidStudioProjects.TaskMaster.app.main.iml
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../../app/build/intermediates/javac/debug/classes" />

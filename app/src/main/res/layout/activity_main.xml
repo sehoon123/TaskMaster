@@ -29,9 +29,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -50,13 +53,19 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 =======
         app:layout_constraintTop_toBottomOf="@+id/et_todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 >>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
+<<<<<<< HEAD
 >>>>>>> d720d07f826272aa16771263cfb67b6ea7179549
+=======
+>>>>>>> f17bec60d8abc83782de6e50e2a84ae844b04915
 
 </androidx.constraintlayout.widget.ConstraintLayout>
