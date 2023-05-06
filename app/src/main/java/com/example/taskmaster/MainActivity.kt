@@ -4,31 +4,53 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
+=======
+import androidx.appcompat.app.AlertDialog
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.example.taskmaster.databinding.ActivityMainBinding
+<<<<<<< HEAD
+=======
+import java.text.SimpleDateFormat
+import java.util.*
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var myRef: DatabaseReference
     private lateinit var todoAdapter: TodoAdapter
+<<<<<<< HEAD
     private val todoList = mutableListOf<String>()
+=======
+    private val todoList = mutableListOf<Todo>()
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Check if the user is signed in
+        initializeDatabaseReference()
+
+        setupRecyclerView()
+
+        setupAddButton()
+
+        readTodosFromDatabase()
+    }
+
+    private fun initializeDatabaseReference() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            // If the user is not signed in, start LoginActivity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         } else {
+<<<<<<< HEAD
             // User is signed in, initialize the database reference for the current user
             val userId = user.uid
             database = FirebaseDatabase.getInstance()
@@ -68,6 +90,93 @@ class MainActivity : AppCompatActivity() {
                     val todo = dataSnapshot.getValue(String::class.java)
                     todo?.let { todoList.add(it) }
                 }
+=======
+            val userId = user.uid
+            val currentDate = getCurrentDateString()
+            database = FirebaseDatabase.getInstance()
+            myRef = database.getReference("todos").child(userId).child(currentDate)
+        }
+    }
+
+    private fun getCurrentDateString(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+
+
+    private fun setupRecyclerView() {
+        todoAdapter = TodoAdapter(todoList, { position ->
+            showUpdateDeleteDialog(position)
+        }) { position, isChecked ->
+            val todo = todoList[position]
+            val updatedTodo = todo.copy(isChecked = isChecked as Boolean)
+            updateTodoInDatabase(todo.key, updatedTodo)
+        }
+        binding.rvTodos.adapter = todoAdapter
+        binding.rvTodos.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun setupAddButton() {
+        binding.btnAdd.setOnClickListener {
+            val newTodo = binding.etTodo.text.toString().trim()
+            if (newTodo.isNotEmpty()) {
+                addNewTodoToDatabase(newTodo)
+            }
+        }
+    }
+
+    private fun showUpdateDeleteDialog(position: Int) {
+        val options = arrayOf("Update", "Delete")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Choose an action")
+        builder.setItems(options) { _, which ->
+            when (which) {
+                0 -> {
+                    val intent = Intent(this, ViewActivity::class.java)
+                    intent.putExtra("action", "update")
+                    intent.putExtra("todoKey", todoList[position].key)
+                    intent.putExtra("todoTitle", todoList[position].title)
+                    startActivity(intent)
+                }
+
+                1 -> {
+                    val todo = todoList[position]
+                    deleteTodoFromDatabase(todo.key)
+                }
+            }
+        }
+        builder.show()
+    }
+
+
+    private fun addNewTodoToDatabase(newTodo: String) {
+        val key = myRef.push().key
+        key?.let {
+            val todo = Todo(newTodo, false, it)
+            myRef.child(it).setValue(todo)
+            todoList.add(todo)
+            todoAdapter.notifyDataSetChanged()
+            binding.etTodo.setText("")
+        }
+    }
+
+    private fun readTodosFromDatabase() {
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val newTodoList = mutableListOf<Todo>()
+
+                for (childSnapshot in dataSnapshot.children) {
+                    val todoData = childSnapshot.getValue(Todo::class.java)
+                    if (todoData != null) {
+                        val key = childSnapshot.key
+                        val todoWithKey = todoData.copy(key = key)
+                        newTodoList.add(todoWithKey)
+                    }
+                }
+
+                todoList.clear()
+                todoList.addAll(newTodoList)
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
                 todoAdapter.notifyDataSetChanged()
             }
 
@@ -76,4 +185,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+<<<<<<< HEAD
 }
+=======
+
+    private fun updateTodoInDatabase(key: String?, updatedTodo: Todo) {
+        key?.let {
+            myRef.child(it).setValue(updatedTodo)
+        }
+    }
+
+
+    private fun deleteTodoFromDatabase(key: String?) {
+        key?.let {
+            myRef.child(it).removeValue()
+        }
+    }
+
+}
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca

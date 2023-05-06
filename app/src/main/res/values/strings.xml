@@ -1,3 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TaskMaster</string>
+    <string name="lorem_ipsum">lorem_ipsum</string>
+    <string name="title_activity_main">Main Activity</string>
+    <string name="title_activity_view">View Activity</string>
+    <string name="add_button_text">Add</string>
+    <string name="update_todo_title">Update Todo</string>
+    <string name="delete_todo_title">Delete Todo</string>
+    <string name="choose_action_title">Choose an action</string>
+    <string name="update_action">Update</string>
+    <string name="delete_action">Delete</string>
+    <string name="todo_updated_message">Todo updated successfully</string>
+    <string name="todo_deleted_message">Todo deleted successfully</string>
+    <string name="error_updating_todo_message">Error updating todo: %s</string>
+    <string name="error_deleting_todo_message">Error deleting todo: %s</string>
+    <string name="todo_title_hint">Enter todo title</string>
+    <string name="todo_updated_successfully">Todo updated successfully\n</string>
+    <string name="todo_key_not_found">Todo key not found\n</string>
+    <string name="delete">Delete</string>
+    <string name="todo_deleted_successfully">Todo deleted successfully</string>
 </resources>
