@@ -1,11 +1,15 @@
 package com.example.taskmaster
 
+<<<<<<< HEAD
 import android.graphics.Paint
+=======
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+<<<<<<< HEAD
 import com.example.taskmaster.databinding.ItemTodoBinding
 
 
@@ -19,10 +23,19 @@ class TodoAdapter(
         val binding =
             ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TodoViewHolder(binding)
+=======
+
+class TodoAdapter(private val todos: List<String>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
+        return TodoViewHolder(itemView)
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         val todo = todos[position]
+<<<<<<< HEAD
         holder.bind(todo)
     }
 
@@ -78,5 +91,16 @@ class TodoAdapter(
 
     private fun View.removeStrikeThrough() {
         this.alpha = 1.0f
+=======
+        holder.todoText.text = todo
+    }
+
+    override fun getItemCount(): Int {
+        return todos.size
+    }
+
+    class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val todoText: TextView = itemView.findViewById(android.R.id.text1)
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
     }
 }

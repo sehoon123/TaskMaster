@@ -28,6 +28,7 @@
         android:id="@+id/rv_todos"
         android:layout_width="0dp"
         android:layout_height="0dp"
+<<<<<<< HEAD
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -45,5 +46,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+=======
+        app:layout_constraintTop_toBottomOf="@+id/et_todo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+>>>>>>> be589b7526c160a37f82af28ba58ae165c568ff6
 
 </androidx.constraintlayout.widget.ConstraintLayout>
