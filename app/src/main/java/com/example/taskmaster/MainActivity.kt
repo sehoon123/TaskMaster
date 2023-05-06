@@ -97,10 +97,14 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+
     private fun addNewTodoToDatabase(newTodo: String) {
         val key = myRef.push().key
         key?.let {
-            myRef.child(it).setValue(Todo(newTodo))
+            val todo = Todo(newTodo, false, it)
+            myRef.child(it).setValue(todo)
+            todoList.add(todo)
+            todoAdapter.notifyDataSetChanged()
             binding.etTodo.setText("")
         }
     }
