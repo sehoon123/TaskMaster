@@ -4,20 +4,30 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
+=======
 import androidx.appcompat.app.AlertDialog
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.example.taskmaster.databinding.ActivityMainBinding
+<<<<<<< HEAD
+=======
 import java.text.SimpleDateFormat
 import java.util.*
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var myRef: DatabaseReference
     private lateinit var todoAdapter: TodoAdapter
+<<<<<<< HEAD
+    private val todoList = mutableListOf<String>()
+=======
     private val todoList = mutableListOf<Todo>()
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +50,47 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
+<<<<<<< HEAD
+            // User is signed in, initialize the database reference for the current user
+            val userId = user.uid
+            database = FirebaseDatabase.getInstance()
+            myRef = database.getReference("todos").child(userId)
+        }
+
+        // Set up the RecyclerView and its adapter
+        todoAdapter = TodoAdapter(todoList)
+        binding.rvTodos.adapter = todoAdapter
+        binding.rvTodos.layoutManager = LinearLayoutManager(this)
+
+        // Listen for add button clicks
+        binding.btnAdd.setOnClickListener {
+            val newTodo = binding.etTodo.text.toString().trim()
+            if (newTodo.isNotEmpty()) {
+                addNewTodo(newTodo)
+            }
+        }
+
+        // Read data from the Realtime Database
+        readTodosFromDatabase()
+    }
+
+    private fun addNewTodo(newTodo: String) {
+        val key = myRef.push().key
+        key?.let {
+            myRef.child(it).setValue(newTodo)
+            binding.etTodo.setText("")
+        }
+    }
+
+    private fun readTodosFromDatabase() {
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                todoList.clear()
+                dataSnapshot.children.forEach { dataSnapshot ->
+                    val todo = dataSnapshot.getValue(String::class.java)
+                    todo?.let { todoList.add(it) }
+                }
+=======
             val userId = user.uid
             val currentDate = getCurrentDateString()
             database = FirebaseDatabase.getInstance()
@@ -125,6 +176,7 @@ class MainActivity : AppCompatActivity() {
 
                 todoList.clear()
                 todoList.addAll(newTodoList)
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
                 todoAdapter.notifyDataSetChanged()
             }
 
@@ -133,6 +185,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+<<<<<<< HEAD
+}
+=======
 
     private fun updateTodoInDatabase(key: String?, updatedTodo: Todo) {
         key?.let {
@@ -148,3 +203,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+>>>>>>> d98425475cd79fdf1325e3f434a91a2b8c79bfca
