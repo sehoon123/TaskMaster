@@ -48,8 +48,7 @@ class TodoAdapter(
                     val updatedTodo = todo.copy(checked = isChecked)
                     updateTodoInDatabase(todo.key, updatedTodo)
                     todoList[adapterPosition] = updatedTodo // update the todo in the list
-                } else {
-                    Log.d("TodoViewHolder", "Todo checked state not changed")
+                    Log.d("TodoViewHolder", "Todo checked state changed to $isChecked")
                 }
             }
             binding.btnDelete.setOnClickListener {

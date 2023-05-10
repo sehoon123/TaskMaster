@@ -57,6 +57,7 @@ class TodoFragment : Fragment() {
             val currentDate = getCurrentDateString()
             database = FirebaseDatabase.getInstance()
             myRef = database.getReference("todos").child(userId).child(currentDate)
+            Log.d("TodoFragment", "Database reference initialized")
         }
     }
 
@@ -67,6 +68,7 @@ class TodoFragment : Fragment() {
 
     private fun setupRecyclerView() {
         todoAdapter = TodoAdapter(todoList, { position ->
+            Log.d("TodoFragment", "Todo clicked at position $position")
             val viewFragment = ViewFragment()
             val bundle = Bundle()
             bundle.putString("action", "update")
@@ -80,12 +82,15 @@ class TodoFragment : Fragment() {
         }, { key, todo ->
             if (key == null) {
                 deleteTodoFromDatabase(todo.key)
+                Log.d("TodoFragment", "Todo deleted from database")
             } else {
                 updateTodoInDatabase(key, todo)
+                Log.d("TodoFragment", "Todo updated in database")
             }
         }, binding.rvTodos)
         binding.rvTodos.adapter = todoAdapter
         binding.rvTodos.layoutManager = LinearLayoutManager(requireContext())
+        Log.d("TodoFragment", "RecyclerView setup")
     }
 
     private fun setupAddButton() {
@@ -93,6 +98,7 @@ class TodoFragment : Fragment() {
             val newTodo = binding.etTodo.text.toString().trim()
             if (newTodo.isNotEmpty()) {
                 addNewTodoToDatabase(newTodo)
+                Log.d("TodoFragment", "New todo added to database")
             }
         }
     }
@@ -106,8 +112,7 @@ class TodoFragment : Fragment() {
             todoList.add(todo) // Add the todo to the todoList
             todoAdapter.notifyDataSetChanged()
             binding.etTodo.setText("")
-            Log.d("TodoFragment", "Todo added to database")
-            Log.d("TodoFragment", "Todo key: $key")
+            Log.d("TodoFragment", "Todo added to database key: $key")
         }
     }
 
@@ -126,11 +131,12 @@ class TodoFragment : Fragment() {
                     }
                 }
 
-                newTodoList.sortBy { it.checked }
 
                 todoList.clear()
                 todoList.addAll(newTodoList)
                 todoAdapter.notifyDataSetChanged()
+
+                Log.d("TodoFragment", "Todo list updated")
 
                 // Set the checked state of the todos
                 for (todo in todoList) {
@@ -138,6 +144,7 @@ class TodoFragment : Fragment() {
                     val viewHolder = binding.rvTodos.findViewHolderForAdapterPosition(index)
                     if (viewHolder != null && viewHolder is TodoAdapter.TodoViewHolder) {
                         viewHolder.binding.checkBox.isChecked = todo.checked
+                        Log.d("TodoFragment", "Todo checked state updated")
                     }
                 }
             }
@@ -153,6 +160,7 @@ class TodoFragment : Fragment() {
             myRef.child(it).setValue(updatedTodo).addOnSuccessListener {
                 // Update the isChecked property of the Todo object
                 val updatedTodoWithCheck = updatedTodo.copy(checked = !updatedTodo.checked)
+                Log.d("TodoAdapter", "Todo updated in database: $updatedTodoWithCheck")
 
                 // Remove the updated todo from the list and add it back at the correct index
                 todoList.removeAt(todoList.indexOfFirst { it.key == key })
@@ -162,6 +170,7 @@ class TodoFragment : Fragment() {
                     todoList.add(0, updatedTodoWithCheck)
                 }
                 todoAdapter.notifyDataSetChanged()
+                Log.d("TodoAdapter", "Todo updated in list: $updatedTodoWithCheck")
             }.addOnFailureListener { e ->
                 Log.e("TodoAdapter", "Error updating todo: ${e.localizedMessage}")
             }
