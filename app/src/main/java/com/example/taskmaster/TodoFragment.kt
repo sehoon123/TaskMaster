@@ -158,8 +158,9 @@ class TodoFragment : Fragment() {
     private fun updateTodoInDatabase(key: String?, updatedTodo: Todo) {
         key?.let {
             myRef.child(it).setValue(updatedTodo).addOnSuccessListener {
-                // Update the isChecked property of the Todo object
-                val updatedTodoWithCheck = updatedTodo.copy(checked = !updatedTodo.checked)
+                // Update the checked property of the Todo object
+                Log.d("TodoAdapter", "updatedTodo: $updatedTodo")
+                val updatedTodoWithCheck = updatedTodo.copy(checked = updatedTodo.checked)
                 Log.d("TodoAdapter", "Todo updated in database: $updatedTodoWithCheck")
 
                 // Remove the updated todo from the list and add it back at the correct index
