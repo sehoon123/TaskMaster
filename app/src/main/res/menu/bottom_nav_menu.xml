@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/cal_menu_item"
+        android:title="Cal"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:checked="true" />
+    <item
+        android:id="@+id/list_menu_item"
+        android:title="List"
+        android:icon="@drawable/ic_launcher_foreground" />
+    <item
+        android:id="@+id/etc_menu_item"
+        android:title="Etc"
+        android:icon="@drawable/ic_launcher_foreground" />
+</menu>

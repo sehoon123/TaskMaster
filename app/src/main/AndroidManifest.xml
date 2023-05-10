@@ -19,7 +19,7 @@
         android:theme="@style/Theme.TaskMaster"
         tools:targetApi="31">
         <activity
-            android:name=".ViewActivity"
+            android:name=".ViewFragment"
             android:exported="false"
             android:label="@string/title_activity_view"
             android:theme="@style/Theme.TaskMaster" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".CameraActivity" />
+        <activity android:name=".CalendarFragment" />
     </application>
 
 </manifest>

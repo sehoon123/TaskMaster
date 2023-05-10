@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.kizitonwose.calendar:view:2.3.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f59633a9af68e3c9b164f29ac8dd6079/transformed/view-2.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f59633a9af68e3c9b164f29ac8dd6079/transformed/view-2.3.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f59633a9af68e3c9b164f29ac8dd6079/transformed/view-2.3.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kizitonwose.calendar/view/2.3.0/6ff5009791cdccc9d9882ff1ffdf2ab7f8f56a9a/view-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kizitonwose.calendar/view/2.3.0/a4bec346fb61edbe7704fff0389a65472d7af004/view-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.kizitonwose.calendar:compose:2.3.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/66abeb82d6236fa5c1e26012d3ac92e0/transformed/compose-2.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/66abeb82d6236fa5c1e26012d3ac92e0/transformed/compose-2.3.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kizitonwose.calendar/compose/2.3.0/d2128b6c3548721db04732bddff9a3b08359e11b/compose-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kizitonwose.calendar/compose/2.3.0/139cc3e56211da7836e4213a7cc0095ee639c891/compose-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
