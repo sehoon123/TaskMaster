@@ -19,4 +19,5 @@
     <string name="todo_key_not_found">Todo key not found\n</string>
     <string name="delete">Delete</string>
     <string name="todo_deleted_successfully">Todo deleted successfully</string>
+    <string name="capture_photo">captured</string>
 </resources>

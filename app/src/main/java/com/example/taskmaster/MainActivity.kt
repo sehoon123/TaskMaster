@@ -22,7 +22,11 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.cal_menu_item -> {
                     // Launch the calendar fragment
-                    loadFragment(CalendarFragment())
+//                    loadFragment(TestFragment())
+                    val calendarFragment = CalendarFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, calendarFragment)
+                        .commit()
                     true
                 }
                 R.id.list_menu_item -> {
@@ -32,7 +36,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.etc_menu_item -> {
                     // Launch the etc fragment
-                    loadFragment(TestFragment())
+                    loadFragment(GalleryFragment())
+                    true
+                }
+                R.id.camera_menu_item -> {
+                    // Launch the camera fragment
+                    loadFragment(CameraFragment())
                     true
                 }
                 else -> false
