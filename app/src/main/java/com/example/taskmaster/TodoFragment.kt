@@ -10,11 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskmaster.databinding.FragmentTodoBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -26,6 +29,17 @@ class TodoFragment : Fragment() {
     private lateinit var todoAdapter: TodoAdapter
     private val todoList = mutableListOf<Todo>()
 
+    private var selectedDate: Calendar? = null
+    private lateinit var model: SharedViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        model.selectedDate.observe(this, Observer { selectedDate ->
+            this.selectedDate = selectedDate
+        })
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +47,7 @@ class TodoFragment : Fragment() {
         binding = FragmentTodoBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +58,20 @@ class TodoFragment : Fragment() {
 
         setupAddButton()
 
-        readTodosFromDatabase()
+        // Observe changes to the selectedDate LiveData
+        model.selectedDate.observe(viewLifecycleOwner, Observer { selectedDate ->
+            this.selectedDate = selectedDate
+            Log.d("TodoFragment", "Selected date: $selectedDate")
+
+            // Update the database reference and read the todos again every time the selectedDate changes
+            initializeDatabaseReference()
+            readTodosFromDatabase()
+        })
+    }
+
+    private fun getDateString(calendar: Calendar): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(calendar.time)
     }
 
     private fun initializeDatabaseReference() {
@@ -54,9 +82,14 @@ class TodoFragment : Fragment() {
             requireActivity().finish()
         } else {
             val userId = user.uid
-            val currentDate = getCurrentDateString()
+            // Use selectedDate if it's not null, else use the current date
+            val dateString = if (selectedDate != null) {
+                getDateString(selectedDate!!)
+            } else {
+                getCurrentDateString()
+            }
             database = FirebaseDatabase.getInstance()
-            myRef = database.getReference("todos").child(userId).child(currentDate)
+            myRef = database.getReference("todos").child(userId).child(dateString)
             Log.d("TodoFragment", "Database reference initialized")
         }
     }
