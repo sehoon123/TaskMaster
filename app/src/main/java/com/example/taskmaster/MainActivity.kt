@@ -48,6 +48,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.bottomNavView.menu.findItem(R.id.list_menu_item).isChecked = true
+
+        // Set onClickListener for the settings button
+        binding.btnSetting.setOnClickListener {
+            val settingFragment = SettingFragment()
+            loadFragment(settingFragment)
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {

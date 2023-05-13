@@ -20,4 +20,5 @@
     <string name="delete">Delete</string>
     <string name="todo_deleted_successfully">Todo deleted successfully</string>
     <string name="capture_photo">captured</string>
+    <string name="settings_icon_content_description">settings</string>
 </resources>

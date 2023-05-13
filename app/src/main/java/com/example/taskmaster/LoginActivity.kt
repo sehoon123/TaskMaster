@@ -82,6 +82,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun logout() {
+        // Sign out from FirebaseAuth
+        Log.d("SettingsFragment", "logout clicked")
+        auth.signOut()
+
+        // Sign out from GoogleSignInClient
+        googleSignInClient.signOut()
+            .addOnCompleteListener(this) {
+                // After signing out, return to the login screen
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+    }
+
     companion object {
         private const val TAG = "LoginActivity"
     }
