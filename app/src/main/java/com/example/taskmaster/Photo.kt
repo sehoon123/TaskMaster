@@ -1,7 +1,5 @@
 package com.example.taskmaster
 
-// File: Photo.kt
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,5 +8,6 @@ data class Photo(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val filePath: String,
-    val timestamp: Long
+    val timestamp: Long,
+    var isGrayscale: Boolean = false
 )
