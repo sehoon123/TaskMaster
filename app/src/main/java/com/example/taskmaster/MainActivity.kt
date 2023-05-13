@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.etc_menu_item -> {
                     // Launch the etc fragment
-                    loadFragment(GalleryFragment())
+//                    loadFragment(GalleryFragment())
+//                    loadFragment(WeatherFragment())
+                    loadFragment(MapFragment())
                     true
                 }
                 R.id.camera_menu_item -> {
