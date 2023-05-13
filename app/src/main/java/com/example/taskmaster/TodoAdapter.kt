@@ -3,6 +3,7 @@ package com.example.taskmaster
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmaster.databinding.TodoListItemBinding
 
@@ -24,7 +25,6 @@ class TodoAdapter(
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        Log.d("TodoAdapter", "onBindViewHolder called for position $position")
         if (holder.adapterPosition != RecyclerView.NO_POSITION) {
             val todo = todoList[holder.adapterPosition]
             holder.update(todo)
@@ -38,26 +38,29 @@ class TodoAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun update(todo: Todo) {
-            Log.d("TodoViewHolder", "bind called for todo ${todo.title}")
             binding.tvTodoTitle.text = todo.title
-            binding.checkBox.setOnCheckedChangeListener(null) // remove previous listener to avoid side-effects
+            binding.checkBox.setOnCheckedChangeListener(null)
             binding.checkBox.isChecked = todo.checked
-            Log.d("TodoViewHolder", "Todo checked: ${todo.checked}")
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked != todo.checked) { // Check if the state has changed
+                if (isChecked != todo.checked) {
                     val updatedTodo = todo.copy(checked = isChecked)
                     updateTodoInDatabase(todo.key, updatedTodo)
-                    todoList[adapterPosition] = updatedTodo // update the todo in the list
-                    Log.d("TodoViewHolder", "Todo checked state changed to $isChecked")
+                    todoList[adapterPosition] = updatedTodo
                 }
             }
             binding.btnDelete.setOnClickListener {
                 todoList.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
                 updateTodoInDatabase(null, todo)
-                Log.d("TodoViewHolder", "Todo deleted")
+            }
+            binding.btnLocation.setOnClickListener {
+                val latitude = todo.latitude
+                val longitude = todo.longitude
+                if (latitude != null && longitude != null) {
+                    val location = "Location: $latitude, $longitude"
+                    Toast.makeText(binding.root.context, location, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
-
 }

@@ -1,19 +1,23 @@
 package com.example.taskmaster
 
-import android.app.AlertDialog
-import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskmaster.databinding.FragmentTodoBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
@@ -32,14 +36,20 @@ class TodoFragment : Fragment() {
     private var selectedDate: Calendar? = null
     private lateinit var model: SharedViewModel
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var currentUserLocation: Location? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        model.selectedDate.observe(this, Observer { selectedDate ->
+        model.selectedDate.observe(this, { selectedDate ->
             this.selectedDate = selectedDate
         })
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +57,6 @@ class TodoFragment : Fragment() {
         binding = FragmentTodoBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +68,7 @@ class TodoFragment : Fragment() {
         setupAddButton()
 
         // Observe changes to the selectedDate LiveData
-        model.selectedDate.observe(viewLifecycleOwner, Observer { selectedDate ->
+        model.selectedDate.observe(viewLifecycleOwner, { selectedDate ->
             this.selectedDate = selectedDate
             Log.d("TodoFragment", "Selected date: $selectedDate")
 
@@ -67,6 +76,9 @@ class TodoFragment : Fragment() {
             initializeDatabaseReference()
             readTodosFromDatabase()
         })
+
+        // Request location permission
+        requestLocationPermission()
     }
 
     private fun getDateString(calendar: Calendar): String {
@@ -126,6 +138,7 @@ class TodoFragment : Fragment() {
         Log.d("TodoFragment", "RecyclerView setup")
     }
 
+
     private fun setupAddButton() {
         binding.btnAdd.setOnClickListener {
             val newTodo = binding.etTodo.text.toString().trim()
@@ -136,11 +149,12 @@ class TodoFragment : Fragment() {
         }
     }
 
-
     private fun addNewTodoToDatabase(newTodo: String) {
         val key = myRef.push().key
         key?.let {
-            val todo = Todo(newTodo, false, it)
+            val latitude = currentUserLocation?.latitude
+            val longitude = currentUserLocation?.longitude
+            val todo = Todo(newTodo, false, it, latitude, longitude)
             myRef.child(it).setValue(todo)
             todoList.add(todo) // Add the todo to the todoList
             todoAdapter.notifyDataSetChanged()
@@ -163,7 +177,6 @@ class TodoFragment : Fragment() {
                         newTodoList.add(todoWithKey)
                     }
                 }
-
 
                 todoList.clear()
                 todoList.addAll(newTodoList)
@@ -211,7 +224,6 @@ class TodoFragment : Fragment() {
         }
     }
 
-
     private fun deleteTodoFromDatabase(key: String?) {
         key?.let {
             myRef.child(it).removeValue().addOnCompleteListener { task ->
@@ -222,5 +234,37 @@ class TodoFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            getCurrentLocation()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                currentUserLocation = location
+                Log.d("TodoFragment", "Current location: $currentUserLocation")
+            }
+            .addOnFailureListener { e ->
+                Log.e("TodoFragment", "Failed to get current location: ${e.message}")
+            }
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
     }
 }
