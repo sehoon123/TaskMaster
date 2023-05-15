@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.etc_menu_item -> {
                     // Launch the etc fragment
-                    loadFragment(GalleryFragment())
+//                    loadFragment(GalleryFragment())
+                    loadFragment(BardFragment())
                     true
                 }
                 R.id.camera_menu_item -> {
