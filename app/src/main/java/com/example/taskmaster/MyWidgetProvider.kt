@@ -19,23 +19,17 @@ import java.util.Locale
 class MyWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        // Iterate over all widget instances
         for (appWidgetId in appWidgetIds) {
-            // Create RemoteViews object and set the layout for the widget
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
-            // Set the click listener for the update button
             views.setOnClickPendingIntent(R.id.widgetUpdateButton, getUpdatePendingIntent(context, appWidgetId))
 
-            // Get the uncompleted to-do list items from the database
+            // Set the click listener for the widget to open the app
+            views.setOnClickPendingIntent(R.id.widgetLayout, getOpenAppPendingIntent(context))
+
             getUncompletedTasksFromDatabase(context) { uncompletedTasks ->
-                // Create a string representation of the uncompleted tasks
                 val tasksText = buildTasksText(uncompletedTasks)
-
-                // Update the text in the widget
                 views.setTextViewText(R.id.widgetText, tasksText)
-
-                // Update the widget
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             }
         }
@@ -45,15 +39,9 @@ class MyWidgetProvider : AppWidgetProvider() {
         val database = FirebaseDatabase.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
         val userId = user?.uid ?: return
-
-        // Get the current date
         val currentDate = getCurrentDate()
-
-        // Construct the database reference
         val myRef = database.getReference("todos").child(userId).child(currentDate)
-        Log.d("MyWidgetProvider", "myRef: $myRef")
 
-        // Retrieve uncompleted tasks from the database
         val uncompletedTasks = mutableListOf<String>()
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -61,14 +49,12 @@ class MyWidgetProvider : AppWidgetProvider() {
                     val todo = childSnapshot.getValue(Todo::class.java)
                     if (todo != null && !todo.checked) {
                         uncompletedTasks.add(todo.title)
-                        Log.d("MyWidgetProvider", "uncompletedTasks: $uncompletedTasks")
                     }
                 }
                 callback(uncompletedTasks)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("MyWidgetProvider", "Failed to read value.", databaseError.toException())
                 callback(emptyList())
             }
         })
@@ -95,7 +81,6 @@ class MyWidgetProvider : AppWidgetProvider() {
             val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
 
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                // Update the widget
                 onUpdate(context, appWidgetManager, intArrayOf(appWidgetId))
             }
         }
@@ -106,9 +91,19 @@ class MyWidgetProvider : AppWidgetProvider() {
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
 
-        // Add FLAG_IMMUTABLE to the PendingIntent flags
         val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        return PendingIntent.getBroadcast(context, appWidgetId, intent, flags)
+        return PendingIntent.getBroadcast(context, appWidgetId, intent, flags) ?: throw Exception("PendingIntent is null")
     }
 
+
+    // Method to get a PendingIntent that will open the app when the widget is clicked
+    private fun getOpenAppPendingIntent(context: Context): PendingIntent {
+        // Intent to start the MainActivity when the widget is clicked
+        val intent = Intent(context, MainActivity::class.java)
+
+        // Add FLAG_IMMUTABLE to the PendingIntent flags
+        val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        return PendingIntent.getActivity(context, 0, intent, flags)
+    }
 }
+
