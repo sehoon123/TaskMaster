@@ -7,53 +7,47 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.taskmaster.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
 
-    private lateinit var todoNotificationUtils: TodoNotificationUtils
-    private lateinit var alarmManager: AlarmManager
-    private lateinit var alarmIntent: PendingIntent
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var sidePanel: LinearLayout
+    private lateinit var overlayView: View
+
+    private var isSidePanelOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize TodoNotificationUtils
-        todoNotificationUtils = TodoNotificationUtils()
+        drawerLayout = binding.drawerLayout
+        sidePanel = binding.sidePanel
+        overlayView = binding.overlayView
 
-        // Set up alarm for periodic notification checks
-        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, TodoNotificationUtils::class.java)
-        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-//        val interval = TimeUnit.HOURS.toMillis(1) // Adjust the interval as needed
-        val interval = TimeUnit.SECONDS.toMillis(5)
-        alarmManager.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + interval,
-            interval,
-            alarmIntent
-        )
-
-        // Launch the todo fragment
-        loadFragment(TodoFragment())
+        // Set up the side panel fragment
+        val sidePanelFragment = SidePanelFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.side_panel, sidePanelFragment)
+            .commit()
 
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.cal_menu_item -> {
                     // Launch the calendar fragment
-                    val calendarFragment = CalendarFragment()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, calendarFragment)
-                        .commit()
+                    loadFragment(CalendarFragment())
                     true
                 }
                 R.id.list_menu_item -> {
@@ -62,9 +56,8 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.etc_menu_item -> {
-                    // Launch the etc fragment
-//                    loadFragment(GalleryFragment())
-                    loadFragment(BardFragment())
+                    // Open the side panel
+                    drawerLayout.openDrawer(sidePanel)
                     true
                 }
                 R.id.camera_menu_item -> {
@@ -82,12 +75,36 @@ class MainActivity : AppCompatActivity() {
             val settingFragment = SettingFragment()
             loadFragment(settingFragment)
         }
+
+        // Disable touch events for the main content area when the side panel is open
+        drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                isSidePanelOpen = slideOffset == 1.0f
+                overlayView.isVisible = isSidePanelOpen
+            }
+        })
+
+        overlayView.setOnClickListener {
+            // Handle clicks on the overlay view
+            // This prevents interaction with the fragments behind the side panel
+        }
+
+        binding.fragmentContainer.setOnTouchListener { _, _ ->
+            isSidePanelOpen
+        }
+
+        if (savedInstanceState == null) {
+            loadFragment(TodoFragment())
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Cancel the alarm when the activity is destroyed
-        alarmManager.cancel(alarmIntent)
+    // Handle the back button press to close the side panel if it's open
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(sidePanel)) {
+            drawerLayout.closeDrawer(sidePanel)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {

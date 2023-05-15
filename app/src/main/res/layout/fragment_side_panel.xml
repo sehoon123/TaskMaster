@@ -1,0 +1,31 @@
+<!-- fragment_side_panel.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Add your side panel content here -->
+    <Button
+        android:id="@+id/btnBard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bard" />
+
+    <Button
+        android:id="@+id/btnGallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gallery" />
+
+    <Button
+        android:id="@+id/btnWeather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Weather" />
+
+    <Button
+        android:id="@+id/btnMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Map" />
+</LinearLayout>
