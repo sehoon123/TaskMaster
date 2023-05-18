@@ -34,6 +34,10 @@ class SidePanelFragment : Fragment() {
             loadMapFragment()
         }
 
+        rootView.findViewById<View>(R.id.btnTimer).setOnClickListener {
+            loadTimerFragment()
+        }
+
         return rootView
     }
 
@@ -60,6 +64,13 @@ class SidePanelFragment : Fragment() {
 
     private fun loadMapFragment() {
         val fragment = MapFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    private fun loadTimerFragment() {
+        val fragment = TimerFragment()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
