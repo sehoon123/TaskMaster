@@ -89,6 +89,9 @@ class SettingFragment : Fragment() {
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 Log.e("SettingFragment", "Biometric authentication error: $errString")
+                if (errorCode == BiometricPrompt.ERROR_USER_CANCELED) {
+                    disableBiometricUnlock()
+                }
             }
         }
 
