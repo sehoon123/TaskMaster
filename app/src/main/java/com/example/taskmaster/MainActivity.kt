@@ -9,7 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -17,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.taskmaster.databinding.ActivityMainBinding
+import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var sidePanel: LinearLayout
     private lateinit var overlayView: View
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private var isSidePanelOpen = false
 
@@ -33,6 +40,61 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeApp()
+
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                    if (errorCode == BiometricPrompt.ERROR_USER_CANCELED || errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                        // User canceled the login prompt, so just show the password prompt
+                        showBiometricPrompt()
+                    } else {
+                        // Call showBiometricPrompt() again to show the prompt
+                        showBiometricPrompt()
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                    loadFragment(TodoFragment())
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    showBiometricPrompt()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login for my app")
+            .setSubtitle("Log in using your biometric credential")
+            .setConfirmationRequired(false)
+            .setNegativeButtonText("Use account password")
+            .build()
+
+        // Check if biometric authentication is available
+        val biometricManager = BiometricManager.from(this)
+        if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
+            // Biometric authentication is available, request authentication
+            biometricPrompt.authenticate(promptInfo)
+        } else {
+            // Biometric authentication is not available or not enabled
+            Toast.makeText(applicationContext, "Biometric authentication is not available", Toast.LENGTH_SHORT).show()
+            // You can handle this case based on your app's requirements
+        }
+    }
+
+    private fun showBiometricPrompt() {
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+    private fun initializeApp() {
+        Log.d("MainActivity", "Initializing app")
         drawerLayout = binding.drawerLayout
         sidePanel = binding.sidePanel
         overlayView = binding.overlayView
@@ -93,9 +155,6 @@ class MainActivity : AppCompatActivity() {
             isSidePanelOpen
         }
 
-        if (savedInstanceState == null) {
-            loadFragment(TodoFragment())
-        }
     }
 
     // Handle the back button press to close the side panel if it's open
@@ -109,5 +168,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Check if biometric authentication is available
+        val biometricManager = BiometricManager.from(this)
+        if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
+            // Biometric authentication is available, request authentication
+            biometricPrompt.authenticate(promptInfo)
+        } else {
+            // Biometric authentication is not available or not enabled
+            Toast.makeText(applicationContext, "Biometric authentication is not available", Toast.LENGTH_SHORT).show()
+            // You can handle this case based on your app's requirements
+        }
     }
 }
