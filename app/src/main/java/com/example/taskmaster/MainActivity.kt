@@ -28,55 +28,60 @@ class MainActivity : AppCompatActivity() {
 
     private var isSidePanelOpen = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViews()
+        setupListeners()
+
+        if (savedInstanceState == null) {
+            loadFragment(TodoFragment())
+        }
+    }
+
+    private fun setupViews() {
         drawerLayout = binding.drawerLayout
         sidePanel = binding.sidePanel
         overlayView = binding.overlayView
 
-        // Set up the side panel fragment
         val sidePanelFragment = SidePanelFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.side_panel, sidePanelFragment)
             .commit()
 
+        binding.bottomNavView.menu.findItem(R.id.list_menu_item).isChecked = true
+    }
+
+    private fun setupListeners() {
         binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.cal_menu_item -> {
-                    // Launch the calendar fragment
                     loadFragment(CalendarFragment())
                     true
                 }
                 R.id.list_menu_item -> {
-                    // Launch the todo fragment
                     loadFragment(TodoFragment())
                     true
                 }
                 R.id.etc_menu_item -> {
-                    // Open the side panel
                     drawerLayout.openDrawer(sidePanel)
                     true
                 }
                 R.id.camera_menu_item -> {
-                    // Launch the camera fragment
                     loadFragment(CameraFragment())
                     true
                 }
                 else -> false
             }
         }
-        binding.bottomNavView.menu.findItem(R.id.list_menu_item).isChecked = true
 
-        // Set onClickListener for the settings button
         binding.btnSetting.setOnClickListener {
-            val settingFragment = SettingFragment()
-            loadFragment(settingFragment)
+            loadFragment(SettingFragment())
         }
 
-        // Disable touch events for the main content area when the side panel is open
         drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 isSidePanelOpen = slideOffset == 1.0f
@@ -92,12 +97,13 @@ class MainActivity : AppCompatActivity() {
         binding.fragmentContainer.setOnTouchListener { _, _ ->
             isSidePanelOpen
         }
-
-        if (savedInstanceState == null) {
-            loadFragment(TodoFragment())
-        }
     }
 
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
     // Handle the back button press to close the side panel if it's open
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(sidePanel)) {
@@ -105,9 +111,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

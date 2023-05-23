@@ -47,22 +47,6 @@ class SettingFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Show biometric prompt if enabled and initialized
-        if (::biometricAdapter.isInitialized) {
-            biometricAdapter.showBiometricPrompt()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // Cancel biometric authentication if enabled and initialized
-        if (::biometricAdapter.isInitialized) {
-            biometricAdapter.cancelAuthentication()
-        }
-    }
-
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
         val loginActivity = requireActivity()
