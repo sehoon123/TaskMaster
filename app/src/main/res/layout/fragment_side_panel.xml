@@ -1,37 +1,55 @@
 <!-- fragment_side_panel.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <!-- Add your side panel content here -->
     <Button
         android:id="@+id/btnBard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bard" />
+        android:layout_marginBottom="40dp"
+        android:background="#00ff0000"
+        android:text="Bard"
+
+        android:textColor="#2B2A2A" />
 
     <Button
         android:id="@+id/btnGallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gallery" />
+        android:layout_marginBottom="40dp"
+        android:background="#00ff0000"
+        android:text="Gallery"
+        android:textColor="#2B2A2A" />
 
     <Button
         android:id="@+id/btnWeather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Weather" />
+        android:layout_marginBottom="40dp"
+        android:background="#00ff0000"
+        android:text="Weather"
+        android:textColor="#2B2A2A" />
 
     <Button
         android:id="@+id/btnMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Map" />
+        android:layout_marginBottom="40dp"
+        android:background="#00ff0000"
+        android:text="Map"
+        android:textColor="#2B2A2A" />
 
     <Button
         android:id="@+id/btnTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#00ff0000"
+        android:textColor="#2B2A2A"
         android:text="Timer" />
 </LinearLayout>

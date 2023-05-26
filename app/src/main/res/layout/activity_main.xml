@@ -14,34 +14,43 @@
 
         <Button
             android:id="@+id/btnSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
+            android:layout_width="118dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#00ff0000"
+            android:drawableLeft="@drawable/user"
+            android:background="@drawable/round"
+            android:text="Set"
+            android:textColor="#333333"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
-            app:layout_constraintTop_toBottomOf="@id/btnSetting" />
+            app:layout_constraintTop_toBottomOf="@id/btnSetting">
 
+        </FrameLayout>
+
+        <!-- Overlay View -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            app:menu="@menu/bottom_nav_menu"
+            tools:layout_editor_absoluteX="0dp" />
 
-        <!-- Overlay View -->
         <View
             android:id="@+id/overlay_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:visibility="gone"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,7 +61,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:orientation="vertical"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        >
 
         <!-- Add your side panel content here -->
 

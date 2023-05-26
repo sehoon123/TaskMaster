@@ -5,17 +5,17 @@
     <item
         android:id="@+id/cal_menu_item"
         android:title="Cal"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:icon="@drawable/calendar" />
     <item
         android:id="@+id/list_menu_item"
         android:title="List"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:icon="@drawable/list" />
     <item
         android:id="@+id/camera_menu_item"
         android:title="Camera"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:icon="@drawable/camera" />
     <item
         android:id="@+id/etc_menu_item"
         android:title="Etc"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:icon="@drawable/etc" />
 </menu>
