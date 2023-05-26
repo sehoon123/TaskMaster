@@ -2,9 +2,13 @@ package com.example.taskmaster
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -42,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initializeApp()
+
+        // Check if the app has notification authority
+        if (!hasNotificationAuthority()) {
+            requestNotificationAuthority()
+        }
 
         scheduleNotificationCheck()
 
@@ -220,5 +229,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         return calendar.timeInMillis
+    }
+
+    private fun hasNotificationAuthority(): Boolean {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.notificationChannels.isNotEmpty()
+        } else {
+            // On older Android versions, assume the app has notification authority
+            true
+        }
+    }
+
+    private fun requestNotificationAuthority() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create a notification channel with the desired settings
+            val channelId = "todo_channel"
+            val channelName = "Todo Channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, channelName, importance)
+
+            // Register the channel with the system
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
