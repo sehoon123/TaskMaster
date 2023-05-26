@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.taskmaster.databinding.ActivityMainBinding
+import java.util.Calendar
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initializeApp()
+
+        scheduleNotificationCheck()
 
         executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor,
@@ -182,5 +185,40 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Biometric authentication is not available", Toast.LENGTH_SHORT).show()
             // You can handle this case based on your app's requirements
         }
+    }
+
+    private fun scheduleNotificationCheck() {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val notificationIntent = Intent(this, TodoNotificationUtils::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        // Set the time when you want the notification check to be triggered
+//        val notificationCheckTimeMillis = calculateNotificationCheckTimeMillis()
+
+        // Set the alarm to trigger the BroadcastReceiver at the specified time
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+//            notificationCheckTimeMillis,
+            System.currentTimeMillis(),
+            10 * 1000, // 10 seconds
+            pendingIntent
+        )
+    }
+
+    private fun calculateNotificationCheckTimeMillis(): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+
+        // If the current time is already past the notification check time for today,
+        // schedule it for the same time on the next day
+        if (calendar.timeInMillis < System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
+
+        return calendar.timeInMillis
     }
 }
