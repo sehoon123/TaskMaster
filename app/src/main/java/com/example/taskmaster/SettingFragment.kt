@@ -2,11 +2,14 @@ package com.example.taskmaster
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.biometric.BiometricManager
@@ -18,8 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 class SettingFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingBinding
-    private lateinit var biometricPrompt: BiometricPrompt
-    private var isBiometricEnabled: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,22 +39,6 @@ class SettingFragment : Fragment() {
             Log.d("SettingFragment", "Logout button clicked")
             logout()
         }
-
-        // Biometric unlock switch handler
-        binding.switchBiometricUnlock.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                enableBiometricUnlock()
-            } else {
-                disableBiometricUnlock()
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (isBiometricEnabled) {
-            showBiometricPrompt()
-        }
     }
 
     private fun logout() {
@@ -62,59 +47,5 @@ class SettingFragment : Fragment() {
         val intent = Intent(loginActivity, LoginActivity::class.java)
         startActivity(intent)
         loginActivity.finish()
-    }
-
-    private fun enableBiometricUnlock() {
-        isBiometricEnabled = true
-        // Show biometric prompt immediately
-        showBiometricPrompt()
-    }
-
-    private fun disableBiometricUnlock() {
-        isBiometricEnabled = false
-        Log.d("SettingFragment", "Biometric unlock disabled")
-    }
-
-    private fun showBiometricPrompt() {
-        val promptInfo = PromptInfo.Builder()
-            .setTitle("Biometric Unlock")
-            .setSubtitle("Use biometric to unlock")
-            .setNegativeButtonText("Cancel")
-            .build()
-
-        val authenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                Log.d("SettingFragment", "Biometric authentication succeeded")
-            }
-
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                Log.e("SettingFragment", "Biometric authentication error: $errString")
-            }
-        }
-
-        val biometricManager = BiometricManager.from(requireContext())
-        if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
-            biometricPrompt = BiometricPrompt(this, authenticationCallback)
-
-            // Display the biometric prompt for authentication
-            biometricPrompt.authenticate(promptInfo)
-        } else {
-            Log.e("SettingFragment", "Biometric authentication is not available or supported")
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isBiometricEnabled) {
-            biometricPrompt.cancelAuthentication()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isBiometricEnabled) {
-            // Show biometric prompt when the user returns to the app
-            showBiometricPrompt()
-        }
     }
 }
