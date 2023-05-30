@@ -10,11 +10,11 @@ import androidx.room.Update
 @Dao
 interface PhotoDao {
     @Insert
-    suspend fun insertPhoto(photo: Photo)
+    fun insertPhoto(photo: Photo)
 
     @Query("SELECT * FROM photos")
-    suspend fun getAllPhotos(): List<Photo>
+    fun getAllPhotos(): List<Photo>
 
     @Update
-    suspend fun updatePhoto(photo: Photo)
+    fun updatePhoto(photo: Photo)
 }

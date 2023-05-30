@@ -1,5 +1,9 @@
 package com.example.taskmaster
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
 import android.os.Handler
@@ -8,14 +12,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.taskmaster.databinding.FragmentTimerBinding
 import com.google.firebase.database.Transaction
+import java.util.Calendar
 import java.util.Timer
 import java.util.TimerTask
 
 
 class TimerFragment : Fragment() {
-    lateinit var binding: FragmentTimerBinding
+    private lateinit var binding: FragmentTimerBinding
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +35,16 @@ class TimerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTimerBinding.inflate(inflater, container, false)
+        context = requireContext()
+
+//        // 알람매니저 설정
+//        alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//
+//        // 알람리시버 intent 생성
+//        val myIntent = Intent(context, AlarmReceiver::class.java)
+//
+//        // Calendar 객체 생성
+//        val calendar = Calendar.getInstance()
 
 
         val timeCountSettingLV = binding.timeCountSettingLV
@@ -43,6 +61,7 @@ class TimerFragment : Fragment() {
         val finishTV = binding.finishTV
         val startBtn = binding.startBtn
         val pauseBtn = binding.pauseBtn
+
 
         startBtn.setOnClickListener{
             timeCountSettingLV.visibility = View.GONE
@@ -66,6 +85,7 @@ class TimerFragment : Fragment() {
             var hour = hourET.text.toString().toInt()
             var minute = minuteET.text.toString().toInt()
             var second = secondET.text.toString().toInt()
+
 
             val handler = Handler(Looper.getMainLooper())
             val timer = Timer()
@@ -98,7 +118,11 @@ class TimerFragment : Fragment() {
                         // 시분초가 다 0이면 toast 띄우고 타이머 종료
                         if (hour == 0 && minute == 0 && second == 0) {
                             timer.cancel()
-                            finishTV.text = "타이머가 종료되었습니다."
+                            Toast.makeText(context,"타이머가 종료되었습니다",Toast.LENGTH_SHORT).show()
+
+                            // BroadcastReceiver를 호출하여 알람을 울리도록 설정
+                            val alarmIntent = Intent(context, AlarmReceiver::class.java)
+                            context.sendBroadcast(alarmIntent)
                         }
                     }
 
