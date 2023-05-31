@@ -39,7 +39,7 @@ class Weather2Fragment : Fragment() {
 
     private fun fetchWeatherData() {
         val apiKey = "4964a25342d6c470365520fa7b81a53c"
-        val city = "London" // Replace with the desired city name
+        val city = "Seoul" // Replace with the desired city name
 
         val apiUrl =
             "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric"
