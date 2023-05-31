@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Looper
 import android.os.Handler
@@ -19,14 +20,56 @@ import java.util.Calendar
 import java.util.Timer
 import java.util.TimerTask
 
-
 class TimerFragment : Fragment() {
     private lateinit var binding: FragmentTimerBinding
     private lateinit var alarmManager: AlarmManager
     private lateinit var context: Context
+    private var timer: Timer? = null
+    private var timerTask: TimerTask? = null
+    private var isRunning = false
+    private var isPaused = false
+    private var hour = 0
+    private var minute = 0
+    private var second = 0
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private var savedHour: Int = 0
+    private var savedMinute: Int = 0
+    private var savedSecond: Int = 0
+    private var startTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = requireContext().getSharedPreferences("TimerPrefs", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
+        if (sharedPreferences.contains(TIMER_IS_RUNNING)) {
+            isRunning = sharedPreferences.getBoolean(TIMER_IS_RUNNING, false)
+            if (isRunning) {
+                savedHour = sharedPreferences.getInt(TIMER_HOUR, 0)
+                savedMinute = sharedPreferences.getInt(TIMER_MINUTE, 0)
+                savedSecond = sharedPreferences.getInt(TIMER_SECOND, 0)
+                startTime = sharedPreferences.getLong(TIMER_START_TIME, 0)
+
+                val elapsedTimeInMillis = System.currentTimeMillis() - startTime
+                val totalTimeInMillis = ((savedHour * 3600) + (savedMinute * 60) + savedSecond) * 1000L
+                val remainingTimeInMillis = totalTimeInMillis - elapsedTimeInMillis
+
+                if (remainingTimeInMillis > 0) {
+                    hour = (remainingTimeInMillis / (1000 * 60 * 60)).toInt()
+                    minute = (remainingTimeInMillis / (1000 * 60) % 60).toInt()
+                    second = (remainingTimeInMillis / 1000 % 60).toInt()
+                } else {
+                    isRunning = false
+                    isPaused = false
+                    hour = savedHour
+                    minute = savedMinute
+                    second = savedSecond
+                    editor.clear().apply()
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -36,16 +79,6 @@ class TimerFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentTimerBinding.inflate(inflater, container, false)
         context = requireContext()
-
-//        // 알람매니저 설정
-//        alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//
-//        // 알람리시버 intent 생성
-//        val myIntent = Intent(context, AlarmReceiver::class.java)
-//
-//        // Calendar 객체 생성
-//        val calendar = Calendar.getInstance()
-
 
         val timeCountSettingLV = binding.timeCountSettingLV
         val timeCountLV = binding.timeCountLV
@@ -62,82 +95,228 @@ class TimerFragment : Fragment() {
         val startBtn = binding.startBtn
         val pauseBtn = binding.pauseBtn
 
-
-        startBtn.setOnClickListener{
+        if (isRunning) {
             timeCountSettingLV.visibility = View.GONE
             timeCountLV.visibility = View.VISIBLE
 
-            if(hourET.text.toString() == ""){
-                hourET.setText("0");
-            }
-            if(minuteET.text.toString() == ""){
-                minuteET.setText("0");
-            }
-            if(secondET.text.toString() == ""){
-                secondET.setText("0");
-            }
+            hourET.setText(hour.toString())
+            minuteET.setText(minute.toString())
+            secondET.setText(second.toString())
 
-
-            hourTV.text = hourET.text.toString()
-            minuteTV.text = minuteET.text.toString()
-            secondTV.text = secondET.text.toString()
-
-            var hour = hourET.text.toString().toInt()
-            var minute = minuteET.text.toString().toInt()
-            var second = secondET.text.toString().toInt()
-
+            hourTV.text = hour.toString().padStart(2, '0')
+            minuteTV.text = minute.toString().padStart(2, '0')
+            secondTV.text = second.toString().padStart(2, '0')
 
             val handler = Handler(Looper.getMainLooper())
-            val timer = Timer()
-            val timerTask = object : TimerTask() {
+            timer = Timer()
+            timerTask = object : TimerTask() {
                 override fun run() {
-                    handler.post{
-                        // 반복 시행할 구문
+                    handler.post {
+                        // Perform the repetitive task
 
                         if (second != 0) {
-                            second --
-
+                            second--
                         } else if (minute != 0) {
-                            second = 60
-                            second--
+                            second = 59
                             minute--
-
                         } else if (hour != 0) {
-                            second = 60
-                            minute = 60
-                            second--
-                            minute--
+                            second = 59
+                            minute = 59
                             hour--
                         }
 
-                        // 시, 분, 초가 10이하 한 자리수면 숫자 앞에 0을 붙임
-                        secondTV.text = if (second <= 9) "0$second" else second.toString()
-                        minuteTV.text = if (minute <= 9) "0$minute" else minute.toString()
-                        hourTV.text = if (hour <= 9) "0$hour" else hour.toString()
+                        // Append leading zeros if the hour, minute, or second is a single digit
+                        secondTV.text = second.toString().padStart(2, '0')
+                        minuteTV.text = minute.toString().padStart(2, '0')
+                        hourTV.text = hour.toString().padStart(2, '0')
 
-                        // 시분초가 다 0이면 toast 띄우고 타이머 종료
+                        // Display a toast and stop the timer if the hour, minute, and second are all zero
                         if (hour == 0 && minute == 0 && second == 0) {
-                            timer.cancel()
-                            Toast.makeText(context,"타이머가 종료되었습니다",Toast.LENGTH_SHORT).show()
+                            timer?.cancel()
+                            Toast.makeText(context, "타이머가 종료되었습니다", Toast.LENGTH_SHORT).show()
 
-                            // BroadcastReceiver를 호출하여 알람을 울리도록 설정
+                            // Send a broadcast to trigger an alarm
                             val alarmIntent = Intent(context, AlarmReceiver::class.java)
                             context.sendBroadcast(alarmIntent)
                         }
                     }
-
                 }
             }
 
-            // 타이머 실행
-            timer.schedule(timerTask, 0, 1000)
+            // Start the timer
+            timer?.schedule(timerTask, 0, 1000)
 
-            pauseBtn.setOnClickListener {
-                timerTask.cancel()
+            // Change button text to "Reset"
+            startBtn.text = "Reset"
+            isRunning = true
+            isPaused = false
+        }
+
+        startBtn.setOnClickListener {
+            if (!isRunning) {
+                // Start the timer
+                timeCountSettingLV.visibility = View.GONE
+                timeCountLV.visibility = View.VISIBLE
+
+                if (hourET.text.toString().isNotBlank()) {
+                    hour = hourET.text.toString().toInt()
+                }
+                if (minuteET.text.toString().isNotBlank()) {
+                    minute = minuteET.text.toString().toInt()
+                }
+                if (secondET.text.toString().isNotBlank()) {
+                    second = secondET.text.toString().toInt()
+                }
+
+                hourTV.text = hour.toString().padStart(2, '0')
+                minuteTV.text = minute.toString().padStart(2, '0')
+                secondTV.text = second.toString().padStart(2, '0')
+
+                val handler = Handler(Looper.getMainLooper())
+                timer = Timer()
+                timerTask = object : TimerTask() {
+                    override fun run() {
+                        handler.post {
+                            // Perform the repetitive task
+
+                            if (second != 0) {
+                                second--
+                            } else if (minute != 0) {
+                                second = 59
+                                minute--
+                            } else if (hour != 0) {
+                                second = 59
+                                minute = 59
+                                hour--
+                            }
+
+                            // Append leading zeros if the hour, minute, or second is a single digit
+                            secondTV.text = second.toString().padStart(2, '0')
+                            minuteTV.text = minute.toString().padStart(2, '0')
+                            hourTV.text = hour.toString().padStart(2, '0')
+
+                            // Display a toast and stop the timer if the hour, minute, and second are all zero
+                            if (hour == 0 && minute == 0 && second == 0) {
+                                timer?.cancel()
+                                Toast.makeText(context, "타이머가 종료되었습니다", Toast.LENGTH_SHORT).show()
+
+                                // Send a broadcast to trigger an alarm
+                                val alarmIntent = Intent(context, AlarmReceiver::class.java)
+                                context.sendBroadcast(alarmIntent)
+                            }
+                        }
+                    }
+                }
+
+                // Start the timer
+                timer?.schedule(timerTask, 0, 1000)
+
+                // Change button text to "Reset"
+                startBtn.text = "Reset"
+                isRunning = true
+                isPaused = false
+            } else {
+                // Reset the timer
+                timerTask?.cancel()
+                timer?.cancel()
+                hour = 0
+                minute = 0
+                second = 0
+                hourTV.text = "00"
+                minuteTV.text = "00"
+                secondTV.text = "00"
+                hourET.text = null
+                minuteET.text = null
+                secondET.text = null
+                timeCountSettingLV.visibility = View.VISIBLE
+                timeCountLV.visibility = View.GONE
+
+                // Change button text back to "Start"
+                startBtn.text = "Start"
+                isRunning = false
+                isPaused = false
+            }
+        }
+
+        pauseBtn.setOnClickListener {
+            if (isRunning && !isPaused) {
+                // Pause the timer
+                timerTask?.cancel()
+
+                // Change button text to "Resume"
+                pauseBtn.text = "Resume"
+                isPaused = true
+            } else if (isRunning && isPaused) {
+                // Resume the timer
+                val handler = Handler(Looper.getMainLooper())
+                timer = Timer()
+                timerTask = object : TimerTask() {
+                    override fun run() {
+                        handler.post {
+                            // Perform the repetitive task
+
+                            if (second != 0) {
+                                second--
+                            } else if (minute != 0) {
+                                second = 59
+                                minute--
+                            } else if (hour != 0) {
+                                second = 59
+                                minute = 59
+                                hour--
+                            }
+
+                            // Append leading zeros if the hour, minute, or second is a single digit
+                            secondTV.text = second.toString().padStart(2, '0')
+                            minuteTV.text = minute.toString().padStart(2, '0')
+                            hourTV.text = hour.toString().padStart(2, '0')
+
+                            // Display a toast and stop the timer if the hour, minute, and second are all zero
+                            if (hour == 0 && minute == 0 && second == 0) {
+                                timer?.cancel()
+                                Toast.makeText(context, "타이머가 종료되었습니다", Toast.LENGTH_SHORT).show()
+
+                                // Send a broadcast to trigger an alarm
+                                val alarmIntent = Intent(context, AlarmReceiver::class.java)
+                                context.sendBroadcast(alarmIntent)
+                            }
+                        }
+                    }
+                }
+
+                // Resume the timer
+                timer?.schedule(timerTask, 0, 1000)
+
+                // Change button text back to "Pause"
+                pauseBtn.text = "Pause"
+                isPaused = false
             }
         }
 
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveTimerState()
+    }
+
+    private fun saveTimerState() {
+        editor.putBoolean(TIMER_IS_RUNNING, isRunning)
+        if (isRunning) {
+            editor.putInt(TIMER_HOUR, hour)
+            editor.putInt(TIMER_MINUTE, minute)
+            editor.putInt(TIMER_SECOND, second)
+            editor.putLong(TIMER_START_TIME, System.currentTimeMillis())
+        }
+        editor.apply()
+    }
+
+    companion object {
+        private const val TIMER_IS_RUNNING = "timer_is_running"
+        private const val TIMER_HOUR = "timer_hour"
+        private const val TIMER_MINUTE = "timer_minute"
+        private const val TIMER_SECOND = "timer_second"
+        private const val TIMER_START_TIME = "timer_start_time"
+    }
 }

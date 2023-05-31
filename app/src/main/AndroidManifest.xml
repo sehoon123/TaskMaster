@@ -75,6 +75,11 @@
             android:enabled="true">
         </service>
 
+        <service
+            android:name=".TimerService"
+            android:enabled="true">
+        </service>
+
 
     </application>
 
